@@ -1,21 +1,28 @@
+console.info('BUNKEROZAVR!');
+
 if (typeof elements === 'undefined') {
     const elements = document.querySelectorAll('.widget_data-type_object > .widget-object__label, .widget_data-type_array > .widget-array__label');
+
+    const CLASS = 'bunkerozavr-switcher';
 
     elements.forEach((element) => {
         const prefixDiv = document.createElement('div');
 
-        prefixDiv.innerHTML = '< toggle >';
-        prefixDiv.classList.add('bunkerozavr-switcher')
-        prefixDiv.addEventListener('click', function (e) {
-            let siblings = Array.prototype.filter.call(this.parentNode.parentNode.children, function (child) {
-                return child !== e.target.parentNode;
-            });
+        const firstChild = element.firstChild;
 
-            siblings.forEach(function (sibling) {
-                sibling.classList.toggle('bunkerozavr-hide');
-            });
+        if (firstChild.classList.contains(CLASS)) return;
+
+        prefixDiv.innerHTML = '( toggle )';
+        prefixDiv.classList.add(CLASS);
+        prefixDiv.addEventListener('click', function (e) {
+            let siblings = this.parentNode.parentNode.children;
+            for (let i = 0; i < siblings.length; i++) {
+                if (siblings[i] !== e.target.parentNode) {
+                    siblings[i].classList.toggle('bunkerozavr-hide');
+                }
+            }
         });
 
-        element.insertBefore(prefixDiv, element.firstChild);
+        element.insertBefore(prefixDiv, firstChild);
     });
 }

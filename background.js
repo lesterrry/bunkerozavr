@@ -4,11 +4,8 @@ chrome.action.onClicked.addListener((tab) => {
         files: ['style.css']
     }).catch((error) => console.log(error));
 
-    chrome.scripting.executeScript(
-        {
-            target: { tabId: tab.id },
-            files: ['content.js']
-        },
-        () => { chrome.runtime.lastError; }
-    );
+    chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        files: ['content.js']
+    }, () => { chrome.runtime.lastError; });
 });
